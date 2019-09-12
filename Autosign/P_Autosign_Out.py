@@ -34,11 +34,11 @@ try:
             #passWD
             #btn_submit
             time.sleep(2)
-            username = driver.find_element_by_id("userID")
-            password = driver.find_element_by_id("passWD")
+            username = driver.find_element_by_id("UID")
+            password = driver.find_element_by_id("KEY")
             username.send_keys(user_id)
             password.send_keys(pw)
-            driver.find_element_by_id("btn_submit").click()
+            driver.find_element_by_id("btnLogin").click()
             logging.info('Login processing----')
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='我要簽退']"))).click() 
             
