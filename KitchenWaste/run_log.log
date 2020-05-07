@@ -1,0 +1,11 @@
+WARNING:root:2020/02/15 16:59:52
+INFO:root:Start-----
+INFO:root:row Start-----
+INFO:root:row data:{"name": "Tracy", "id": "8757","tel":"0900000000"}
+
+INFO:root:get user_id:8757
+INFO:root:web is opened
+INFO:root:5¬í«á°e¥X:2020/02/15 16:59:58
+INFO:root:2020/02/15 17:00:03
+INFO:root:8757:over-----
+INFO:root:End-----
