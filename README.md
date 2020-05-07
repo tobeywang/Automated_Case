@@ -14,3 +14,7 @@
 `$ pip install selenium-3.10.0`
 `$ pip install json`
 `$ pip install logging`
+
+6.P_Rate_Sendmail:公開資料讀取並發送Email
+
+7.P_Stock_Volume:個股每日價量資料
