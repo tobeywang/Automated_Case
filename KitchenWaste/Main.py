@@ -23,7 +23,8 @@ try:
     #userID #passWD
     jsonfile='info.json'
     if os.path.exists(jsonfile):
-        with open(jsonfile,'r') as js:
+        with open(jsonfile,'r',encoding='UTF-8') as js:
+        #with open(jsonfile,'r') as js:
             #多筆讀取
             logging.info('row Start-----')
             multiple=js.readlines()
