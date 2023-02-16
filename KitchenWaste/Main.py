@@ -10,21 +10,29 @@ from datetime import datetime as dt
 import json
 from selenium.webdriver.common.keys import Keys
 import sys #查exception
+import notify
+import configparser
 #System.setProperty("webdriver.ie.driver","C://Program Files (x86)//Internet Explorer//iexplore.exe");
 
 #chromedriver = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe"  
 
+#Get config.ini
+config = configparser.ConfigParser()
+config.read(os.path.join(os.path.dirname(__file__), r"config.ini"))
+lineNotifyToken = config.get("line_notify", "NotifyToken")
+
 try:
     logging.getLogger('').handlers = []
-    logging.basicConfig(filename = "run_log.log",filemode="w+",level="INFO")
+    logging.basicConfig(filename = "run_log.log",filemode="a",level="INFO")
     logging.warning(dt.now().strftime("%Y/%m/%d %H:%M:%S"))
     logging.info('Start-----')
-#    chromedriver = "chromedriver_2.36\\chromedriver.exe"  
+
+    chromedriver = "chromedriver_2.36\\chromedriver.exe"  
     #userID #passWD
-    jsonfile='info.json'
+     jsonfile='info.json'
+    #jsonfile='info_test.json'
     if os.path.exists(jsonfile):
         with open(jsonfile,'r',encoding='UTF-8') as js:
-        #with open(jsonfile,'r') as js:
             #多筆讀取
             logging.info('row Start-----')
             multiple=js.readlines()
@@ -40,13 +48,15 @@ try:
                 #指定chromedriver位置'
     #            driver = webdriver.Chrome(chromedriver) 
                 driver = webdriver.Chrome() 
-    #            driver.get("http://google.com")
+    #           driver.get("http://google.com")
                 #測試機
-                driver.get("file:///D:/Cathay_T/Python/cr_kitchenwaste/Code/Unit_Test_html/main.html")
+                # driver.get("file://vboxsvr/VMShare/Python/Automated_Case-master/Automated_Case-master/KitchenWaste/main.html")
+                # driver.get("D://VMShare//Python//Automated_Case-master//Automated_Case-master//KitchenWaste//main.html")
                 #正式機
-#                driver.get("https://kitchenwaste.ksepb.gov.tw/apply.aspx")
+                driver.get("https://epbkitchenwaste.kcg.gov.tw/apply.aspx")
                 logging.info('web is opened')
                 
+                time.sleep(2)
 #                btn_submit
                 #xpath
                 username = WebDriverWait(driver, 10).until(
@@ -67,16 +77,18 @@ try:
                 userid.send_keys(user_id)
                 usertel.send_keys(user_tel)
                 
-                logging.info('5秒後送出:'+dt.now().strftime("%Y/%m/%d %H:%M:%S"))
-                time.sleep(5)                
+                logging.info('2秒後送出:'+dt.now().strftime("%Y/%m/%d %H:%M:%S"))
+                time.sleep(2)                
                 
                 usertel.send_keys(Keys.ENTER)
 #                driver.find_element_by_xpath("//input[@class='button']").click()
                 
                 logging.info(dt.now().strftime("%Y/%m/%d %H:%M:%S"))
                 logging.info(user_id+' over-----')
-                break
+#               break
             logging.info('End-----')
+            
+            notify.pushNotify(lineNotifyToken,str('KitchenWaste - '+ user_id +' - 訂閱成功'))
     else:
         logging.warning(dt.now().strftime("%Y/%m/%d %H:%M:%S"))
 except Exception as error:
@@ -86,6 +98,7 @@ except Exception as error:
     errMsg = "Error:[{}] {}".format( error_class, detail)
     logging.error(dt.now().strftime("%Y/%m/%d %H:%M:%S"))
     logging.error(errMsg)
+    notify.pushNotify(lineNotifyToken,str('KitchenWaste - 訂閱失敗'))
     
 #    logging.getLogger('').handlers = []
 #    logging.basicConfig(filename = "run_log.log",
