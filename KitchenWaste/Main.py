@@ -56,7 +56,8 @@ try:
                 driver.get("https://epbkitchenwaste.kcg.gov.tw/apply.aspx")
                 logging.info('web is opened')
                 
-                time.sleep(2)
+                #time.sleep(2) #固定睡2秒
+                driver.implicitly_wait(10) #逾時的設定：最多等到10秒
 #                btn_submit
                 #xpath
                 username = WebDriverWait(driver, 10).until(
@@ -77,8 +78,9 @@ try:
                 userid.send_keys(user_id)
                 usertel.send_keys(user_tel)
                 
-                logging.info('2秒後送出:'+dt.now().strftime("%Y/%m/%d %H:%M:%S"))
-                time.sleep(2)                
+                logging.info('送出:'+dt.now().strftime("%Y/%m/%d %H:%M:%S"))
+                #time.sleep(2)               
+                driver.implicitly_wait(10) #逾時的設定：最多等到10秒 
                 
                 usertel.send_keys(Keys.ENTER)
 #                driver.find_element_by_xpath("//input[@class='button']").click()
